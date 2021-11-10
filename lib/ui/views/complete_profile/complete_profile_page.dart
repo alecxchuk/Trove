@@ -56,7 +56,7 @@ class _StepperDemoState extends State<CompleteProfilePage> with ValidatorMixin {
           child: Consumer<CompleteProfileViewModel>(
               builder: (context, model, child) {
             return model.busy
-                ? const CicularProgress()
+                ? const CircularProgress()
                 : Column(
                     children: [
                       Expanded(

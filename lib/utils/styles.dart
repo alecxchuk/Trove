@@ -46,6 +46,8 @@ class AppTextStyle {
   static TextStyle white600_18 = _base(_size18, _weight600, AppColors.appwhite);
   static TextStyle whiteBold24 =
       _base(_size24, _boldWeight, AppColors.appwhite);
+  static TextStyle whiteBold32 =
+      _base(_size32, _boldWeight, AppColors.appwhite);
   static TextStyle white500_20 = _base(_size20, _weight500, AppColors.appwhite);
   static TextStyle white600_32 = _base(_size32, _weight600, AppColors.appwhite);
 

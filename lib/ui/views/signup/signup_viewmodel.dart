@@ -43,7 +43,7 @@ class SignupViewModel extends BaseModel {
     // Api call
     var response = await _api.signUp(email: email, password: password);
     print('xxxzz:$response');
-    if (response?.statusCode == 200) {
+    if (response?.statusCode == 201) {
       //_snackService.showSnackbar(content: signupMessage);
 
       storage.setString(StorageKeys.currentUserEmail, email);

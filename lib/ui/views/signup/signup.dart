@@ -41,7 +41,7 @@ class _SignupPageState extends State<SignupPage> with ValidatorMixin {
         //onModelReady: (model) => model.init(),
         builder: (context, model, child) => Scaffold(
             body: model.busy
-                ? const CicularProgress()
+                ? const CircularProgress()
                 : SingleChildScrollView(
                     child: Form(
                       key: _formKey,

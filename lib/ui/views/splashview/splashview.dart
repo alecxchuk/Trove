@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:trove/app/app.router.dart';
 import 'package:trove/ui/shared/long_button.dart';
 import 'package:trove/utils/styles.dart';
 
@@ -46,7 +47,12 @@ class SplashView extends StatelessWidget {
             top: 600,
             child: Align(
                 alignment: Alignment.center,
-                child: LongButton(onPressed: () {}, label: 'Get started')))
+                child: LongButton(
+                    onPressed: () {
+                      //TODO REMOVE
+                      Navigator.popAndPushNamed(context, Routes.loginView);
+                    },
+                    label: 'Get started')))
       ]),
     );
   }

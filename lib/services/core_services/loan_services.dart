@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:trove/models/loan_history.dart';
 import 'package:trove/models/loan_model.dart';
 import 'package:trove/services/core_services/trove_api.dart';
 import 'package:trove/utils/constants/app_constants.dart';
@@ -6,18 +10,25 @@ class LoanServices {
   //api
   final TroveApi _api = TroveApi(baseUrl);
 
-  //StreamController<User> userController = StreamController<User>();
-
+  StreamController<List<LoanHistoryModel>> loanController =
+      StreamController<List<LoanHistoryModel>>();
+  List<LoanHistoryModel> initial = [];
   //
-  Future<List<LoanModel>> getLoanHistory(String id, String token) async {
-    var res = await _api.fetchLoanHistory(id, token);
+  Future<List<LoanHistoryModel>> getLoanHistory(String id, String token) async {
+    List<LoanHistoryModel> res = await _api.fetchLoanHistory(id, token);
 
-    if (res?.data['data'] == null) {
-      return [];
+    // if (res?.data['data'] == null) {
+    //   return [];
+    // }
+    // return (res?.data?['data'] as List)
+    //     .map((e) => LoanModel.fromJson(e))
+    //     .toList();
+
+    if (res != []) {
+      loanController.add(res);
     }
-    return (res?.data?['data'] as List)
-        .map((e) => LoanModel.fromJson(e))
-        .toList();
+
+    return res;
   }
 
   Future<List<LoanModel>> getActiveLoans(String id, String token) async {
@@ -25,19 +36,20 @@ class LoanServices {
     return res;
   }
 
-  Future<bool> requestLoan(
+  Future<Map<String, dynamic>> requestLoan(
       String id, String amount, String duration, String token) async {
     var response = await _api.requestLoan(id, amount, duration, token);
 
     var success = false;
-
-    if (response?.statusCode == 200) {
+    Map<String, dynamic>? map;
+    if (response?.statusCode == 201) {
       success = true;
-      var map = Map<String, dynamic>.from(response?.data['data']);
-      // _loan = LoanModel.fromJson(map);
+      map = Map<String, dynamic>.from(response?.data['data']);
+      debugPrint('zzaaz $map');
+      var _loan = LoanModel.fromJson(map);
       //userController.add(_user!);
     }
 
-    return success;
+    return {'success': success, 'res': map};
   }
 }

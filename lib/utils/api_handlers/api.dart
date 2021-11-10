@@ -25,7 +25,7 @@ abstract class Api {
       String? dateOfBirth});
 
   // THE SERVICE TO GET USER PORTFOLIO
-  Future<List<dynamic>> fetchUserPortfolio(String id, String token);
+  Future<dynamic> fetchUserPortfolio(String id, String token);
 
   // THE SERVICE TO GET ALL USER ACTIVE LOANS
   Future<List<dynamic>> getActiveLoans(String id, String token);

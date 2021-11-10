@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trove/app/app.locator.dart';
+import 'package:trove/models/loan_history.dart';
 import 'package:trove/models/user_model.dart';
 import 'package:trove/ui/nav_pages/dashboard/widgets/assets_tile.dart';
 import 'package:trove/ui/nav_pages/dashboard/widgets/info_tile.dart';
@@ -17,6 +18,7 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<List<LoanHistoryModel>>(context);
     return BaseWidget<DashboardViewModel>(
         model: model,
         onModelReady: (model) => model.init(),
@@ -47,17 +49,28 @@ class Dashboard extends StatelessWidget {
                             const SizedBox(
                               height: 16,
                             ),
-                            Text(
-                              'Hello ${Provider.of<User>(context).firstName}',
-                              style: AppTextStyle.whiteBold24,
+                            Flexible(
+                              child: Text(
+                                'Hello ${Provider.of<User>(context).firstName}',
+                                style: AppTextStyle.whiteBold32,
+                              ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             Text(
-                              'You have no loans yet',
+                              provider.isEmpty ? 'You have no loans yet' : '',
                               style: AppTextStyle.white500_20,
                             )
+
+                            // Row(children:[Text(
+                            //   'provider.first.',
+                            //   style: AppTextStyle.white500_20,
+                            // ),
+                            // Text(
+                            //   'You have no loans yet',
+                            //   style: AppTextStyle.white500_20,
+                            // )])
                           ],
                         ),
                       ),

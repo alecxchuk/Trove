@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CicularProgress extends StatelessWidget {
-  const CicularProgress({Key? key}) : super(key: key);
+class CircularProgress extends StatelessWidget {
+  const CircularProgress({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

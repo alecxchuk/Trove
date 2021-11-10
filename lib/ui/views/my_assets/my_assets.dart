@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:trove/models/user_portfolio.dart';
 import 'package:trove/ui/shared/shared.dart';
 import 'package:trove/ui/shared/ui_helpers.dart';
 import 'package:trove/utils/styles.dart';
@@ -65,11 +67,14 @@ class MyAssets extends StatelessWidget {
             style: AppTextStyle.blackBold24,
           )),
           UIHelper.verticalSpaceMedium,
-          stockTile('', 'AAPL', '4000', 0),
+          stockTile('', 'AAPL',
+              Provider.of<List<UserPortfolio>>(context)[1].equityValue!, 0),
           UIHelper.verticalSpaceSmall,
-          stockTile('', 'AAPL', '4000', 1),
+          stockTile('', 'AMZN',
+              Provider.of<List<UserPortfolio>>(context)[2].equityValue!, 1),
           UIHelper.verticalSpaceSmall,
-          stockTile('', 'AAPL', '4000', 2),
+          stockTile('', 'TSLA',
+              Provider.of<List<UserPortfolio>>(context)[0].equityValue!, 2),
           UIHelper.verticalSpaceSmall,
           Align(
             alignment: Alignment.center,

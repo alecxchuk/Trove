@@ -36,25 +36,37 @@
 
 import 'dart:async';
 
+import 'package:trove/models/alert_request.dart';
+import 'package:trove/models/alert_response.dart';
+
 class DialogService {
-  Function? _showDialogListener;
-  Completer? _dialogCompleter;
+  Function(AlertRequest)? _showDialogListener;
+  Completer<AlertResponse>? _dialogCompleter;
 
   /// Registers a callback function. Typically to show the dialog
-  void registerDialogListener(Function showDialogListener) {
+  void registerDialogListener(Function(AlertRequest) showDialogListener) {
     _showDialogListener = showDialogListener;
   }
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
-  Future showDialog() {
+  Future<AlertResponse> showDialog({
+    String? title,
+    String? description = '',
+    String? buttonTitle = 'Ok',
+  }) {
     _dialogCompleter = Completer();
-    _showDialogListener!();
+    var req = AlertRequest(
+      title: title!,
+      description: description!,
+      buttonTitle: buttonTitle!,
+    );
+    _showDialogListener!(req);
     return _dialogCompleter!.future;
   }
 
   /// Completes the _dialogCompleter to resume the Future's execution call
-  void dialogComplete() {
-    _dialogCompleter!.complete();
+  void dialogComplete(AlertResponse response) {
+    _dialogCompleter!.complete(response);
     _dialogCompleter = null;
   }
 }

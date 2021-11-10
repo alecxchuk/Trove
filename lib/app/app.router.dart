@@ -44,7 +44,7 @@ class AppRouter {
       case '/':
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.loginView:
-        return MaterialPageRoute(builder: (_) => LoginPage());
+        return MaterialPageRoute(builder: (_) => const LoginPage());
       case Routes.signupView:
         return MaterialPageRoute(builder: (_) => SignupPage());
       case Routes.recoverPasswordView:
@@ -70,7 +70,7 @@ class AppRouter {
       case Routes.profilePage:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
       case Routes.loanActivity:
-        return MaterialPageRoute(builder: (_) => const LoanActivity());
+        return MaterialPageRoute(builder: (_) => LoanActivity());
       case Routes.completeProfile:
         return MaterialPageRoute(builder: (_) => CompleteProfilePage());
       // case Routes.myAssets:

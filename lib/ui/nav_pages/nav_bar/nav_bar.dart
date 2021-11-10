@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:trove/ui/nav_pages/dashboard/dashboard.dart';
 import 'package:trove/ui/nav_pages/loan_activity/loan_activity.dart';
 import 'package:trove/ui/nav_pages/profile_page/profile_page.dart';
+import 'package:trove/ui/shared/app_bar.dart';
 import 'package:trove/ui/views/base_widget/network_sentive.dart';
 
 class NavBar extends StatefulWidget {
@@ -24,8 +25,13 @@ class NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Beer App'),
+      appBar: CustomAppBar(
+        title: selectedIndex == 0
+            ? 'Dashboard'
+            : selectedIndex == 1
+                ? 'Loan History'
+                : 'Profile',
+        leading: Icons.arrow_back_ios_new,
       ),
       body: getViewForIndex(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

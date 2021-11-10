@@ -5,6 +5,7 @@ import 'package:trove/app/app.locator.dart';
 import 'package:trove/models/user_model.dart';
 import 'package:trove/ui/shared/app_bar.dart';
 import 'package:trove/ui/shared/long_button.dart';
+import 'package:trove/ui/shared/progress_indicator.dart';
 import 'package:trove/ui/shared/shared.dart';
 import 'package:trove/ui/views/submit_loan_request/widgets/summary_tile.dart';
 import 'package:trove/utils/colors.dart';
@@ -37,88 +38,90 @@ class SubmitLoan extends StatelessWidget {
             create: (context) => model,
             child:
                 Consumer<SubmitLoanViewModel>(builder: (context, model, child) {
-              return Container(
-                height: MediaQuery.of(context).size.height,
-                color: AppColors.appwhite,
-                child: SingleChildScrollView(
-                  child: Column(children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: const BoxDecoration(
-                        color: AppColors.appwhite,
-                      ),
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(
-                                height: 16,
+              return model.busy
+                  ? const CircularProgress()
+                  : Container(
+                      height: MediaQuery.of(context).size.height,
+                      color: AppColors.appwhite,
+                      child: SingleChildScrollView(
+                        child: Column(children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                              color: AppColors.appwhite,
+                            ),
+                            child: Align(
+                              alignment: Alignment.topCenter,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                    Text(
+                                      'Repayments will be automatically collected from the debit card linked to your account',
+                                      style: AppTextStyle.greyNormal16,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    SummaryCard(
+                                        loanAmount: loanAmount,
+                                        loanDuration: loanDuration,
+                                        totalDue: totalDue,
+                                        interest: interest),
+                                    const SizedBox(
+                                      height: 16,
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text(
-                                'Repayments will be automatically collected from the debit card linked to your account',
-                                style: AppTextStyle.greyNormal16,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              SummaryCard(
-                                  loanAmount: loanAmount,
-                                  loanDuration: loanDuration,
-                                  totalDue: totalDue,
-                                  interest: interest),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: loanDetailTile(
+                                Provider.of<User>(context).bankUsername!,
+                                'Account Name'),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: loanDetailTile(
+                                Provider.of<User>(context).bankName!,
+                                'Bank Account Information',
+                                context),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            child: loanDetailTile(
+                                Provider.of<User>(context).bankAccountNumber!,
+                                'Account Number',
+                                context),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: LongButton(
+                                  onPressed: () {
+                                    model.requestLoan(totalDue, loanDuration);
+                                  },
+                                  label: 'Submit'))
+                        ]),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: loanDetailTile(
-                          Provider.of<User>(context).bankUsername!,
-                          'Account Name'),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: loanDetailTile(
-                          Provider.of<User>(context).bankName!,
-                          'Bank Account Information',
-                          context),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: loanDetailTile(
-                          Provider.of<User>(context).bankAccountNumber!,
-                          'Account Number',
-                          context),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: LongButton(
-                            onPressed: () {
-                              model.nToLoanSuccessful();
-                            },
-                            label: 'Submit'))
-                  ]),
-                ),
-              );
+                    );
             })));
   }
 

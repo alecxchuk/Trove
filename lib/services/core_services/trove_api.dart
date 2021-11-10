@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:trove/app/app.locator.dart';
 import 'package:trove/app/app.logger.dart';
 import 'package:trove/models/api_response.dart';
+import 'package:trove/models/loan_history.dart';
 import 'package:trove/models/loan_model.dart';
 import 'package:trove/models/user_portfolio.dart';
 import 'package:trove/services/app_services/dialog_service.dart';
@@ -39,6 +40,14 @@ class TroveApi implements Api {
 //     }
 //   }
 
+  _showDialog(String title, String message) async {
+    print('dialog called');
+    await _dialogService.showDialog(
+      title: title,
+      description: message,
+    );
+  }
+
   // HELPER METHOD TO SHOW FAILURE SNACKBAR
   Future showSnackbar(String message) async {
     await _snackService.showSnackbar(
@@ -47,16 +56,21 @@ class TroveApi implements Api {
 
   // HELPER METHOD FOR CATCHING DIO ERRORS
   catchError(e) {
-    _dialogService.showDialog(/*title: 'lol'*/);
-
     log.w('pop:${e.response!.data!['error']}');
     //(err.response?.data ?? err.message).toString()
     if (e.response!.data!['error'] == String) {
-      showSnackbar(
-        e.response!.data!['error'],
-      );
+      _showDialog("Error", e.response!.data!['error']);
+      // showSnackbar(
+      //   e.response!.data!['error'],
+      // );
     } else if (e.response!.data!['error'] != String) {
-      showSnackbar(
+      // showSnackbar(
+      //   e.response!.data!['message'] ??
+      //       e.response!.data['error'] ??
+      //       errorOccurred,
+      // );
+      _showDialog(
+        "Error",
         e.response!.data!['message'] ??
             e.response!.data['error'] ??
             errorOccurred,
@@ -210,7 +224,7 @@ class TroveApi implements Api {
       );
       log.i(res.data);
       return (res.data?['data'] as List)
-          .map((e) => LoanModel.fromJson(e))
+          .map((e) => LoanHistoryModel.fromJson(e))
           .toList();
     } on DioError catch (e) {
       log.w(e.toString());
@@ -219,7 +233,7 @@ class TroveApi implements Api {
   }
 
   @override
-  Future<List> fetchUserPortfolio(String id, String token) async {
+  Future fetchUserPortfolio(String id, String token) async {
     try {
       final res = await dio.get(
         '$baseUrl$fetchPortfolioPath$id/',
@@ -264,13 +278,12 @@ class TroveApi implements Api {
   @override
   Future requestLoan(
       String id, String amount, String duration, String token) async {
-    return await post(
-      "$baseUrl$requestLoan$id/",
-      body: {
-        "amount": amount,
-        "duration": duration,
-      },
-    );
+    return await post("$baseUrl$requestLoanPath$id/",
+        body: {
+          "amount": amount,
+          "duration": duration,
+        },
+        token: token);
   }
 
   @override

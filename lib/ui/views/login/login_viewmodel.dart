@@ -41,6 +41,7 @@ class LoginViewModel extends BaseModel {
   }
 
   login(String email, String password) async {
+    //_userService.setUserDetails(User());
     setBusy(true);
     var success = await _authenticationService.login(email, password);
     // var response = await _api.login(email: email, password: password);
@@ -69,7 +70,8 @@ class LoginViewModel extends BaseModel {
     //   debugPrint('lolaas ${_userService.userEmail}');
 
     if (success) {
-      nToDashboard();
+      //nToDashboard();
+      nToCompleteProfile();
     }
 
     //}

@@ -3,11 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:trove/app/app.locator.dart';
 import 'package:trove/app/app.router.dart';
 import 'package:trove/managers/snackbar_manager.dart';
+import 'package:trove/models/loan_model.dart';
+import 'package:trove/models/user_portfolio.dart';
+import 'package:trove/services/core_services/loan_services.dart';
+import 'package:trove/services/core_services/portfolio_service.dart';
 import 'package:trove/ui/views/complete_profile/complete_profile_page_viewmodel.dart';
 import 'package:trove/ui/views/request_loan/request_loan_vm.dart';
 import 'package:trove/utils/enums.dart';
 
 import 'managers/dialog.dart';
+import 'models/loan_history.dart';
 import 'models/user_model.dart';
 import 'services/connectivity_service.dart';
 import 'services/core_services/authentication_service.dart';
@@ -29,7 +34,7 @@ Future<void> main() async {
       // ChangeNotifierProvider(create: (_) => LoginViewModel()),
       // ChangeNotifierProvider(create: (_) => SignupViewModel()),
       // ChangeNotifierProvider(create: (_) => OtpViewModel()),
-      //ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+      ChangeNotifierProvider(create: (_) => DashboardViewModel()),
       // ChangeNotifierProvider(create: (_) => LoanSuccessfulViewModel()),
       // ChangeNotifierProvider(create: (_) => SubmitLoanViewModel()),
       // ChangeNotifierProvider(create: (_) => RequestLoanViewModel()),
@@ -42,6 +47,16 @@ Future<void> main() async {
         initialData: User.initial(),
         create: (BuildContext context) =>
             serviceLocator<AuthenticationService>().userController.stream,
+      ),
+      StreamProvider<List<LoanHistoryModel>>(
+        initialData: LoanServices().initial,
+        create: (BuildContext context) =>
+            serviceLocator<LoanServices>().loanController.stream,
+      ),
+      StreamProvider<List<UserPortfolio>>(
+        initialData: PortfolioService().initial,
+        create: (BuildContext context) =>
+            serviceLocator<PortfolioService>().userController.stream,
       ),
     ],
     child: const MyApp(),
@@ -61,7 +76,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.loginView,
+      initialRoute: Routes.splashView,
       onGenerateRoute: AppRouter.generateRoute,
       builder: (context, widget) => Navigator(
         onGenerateRoute: (settings) => MaterialPageRoute(

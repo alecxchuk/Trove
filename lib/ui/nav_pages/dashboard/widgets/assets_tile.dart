@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:trove/models/user_portfolio.dart';
 import 'package:trove/utils/styles.dart';
 
 class AssertCard extends StatelessWidget {
@@ -10,12 +12,25 @@ class AssertCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final widgets = [
       listItem(
-          index: '2',
+          index: '1',
           title: 'Your total asset portfolio',
           value: '10000',
           keys: const ValueKey(1)),
       listItem(
-          index: '2', title: 'Apple', value: '4000', keys: const ValueKey(2)),
+          index: '2',
+          title: Provider.of<List<UserPortfolio>>(context)[1].symbol!,
+          value: Provider.of<List<UserPortfolio>>(context)[1].equityValue!,
+          keys: const ValueKey(2)),
+      // listItem(
+      //     index: '3',
+      //     title: Provider.of<List<UserPortfolio>>(context)[2].symbol!,
+      //     value: Provider.of<List<UserPortfolio>>(context)[2].equityValue!,
+      //     keys: const ValueKey(3)),
+      // listItem(
+      //     index: '4',
+      //     title: Provider.of<List<UserPortfolio>>(context)[0].symbol!,
+      //     value: Provider.of<List<UserPortfolio>>(context)[0].equityValue!,
+      //     keys: const ValueKey(4)),
     ];
 
     return Container(
