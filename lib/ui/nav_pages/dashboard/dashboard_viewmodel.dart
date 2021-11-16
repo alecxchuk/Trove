@@ -25,12 +25,13 @@ class DashboardViewModel extends BaseModel {
     // TODO
     setBusy(true);
     await _portfolioService.fetchUserPortfolio(
-        _userService.userId, _userService.authToken);
+        _userService.userDetails!.id, _userService.authToken);
     setBusy(false);
-    Timer.periodic(const Duration(seconds: 2), (Timer t) {
-      final isLastIndex = index == 2 - 1;
+    Timer.periodic(const Duration(seconds: 10), (Timer t) {
+      final isLastIndex = index == 4 - 1;
 
       _index = isLastIndex ? 0 : index + 1;
+      notifyListeners();
     });
     notifyListeners();
   }

@@ -219,7 +219,7 @@ class TroveApi implements Api {
   Future fetchLoanHistory(String id, String token) async {
     try {
       final res = await dio.get(
-        '$baseUrl$loanHistoryPath$id/',
+        '$baseUrl$loanHistoryPath$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       log.i(res.data);
@@ -236,7 +236,7 @@ class TroveApi implements Api {
   Future fetchUserPortfolio(String id, String token) async {
     try {
       final res = await dio.get(
-        '$baseUrl$fetchPortfolioPath$id/',
+        '$baseUrl$fetchPortfolioPath$id',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       log.i(res.data);

@@ -34,7 +34,7 @@ Future<void> main() async {
       // ChangeNotifierProvider(create: (_) => LoginViewModel()),
       // ChangeNotifierProvider(create: (_) => SignupViewModel()),
       // ChangeNotifierProvider(create: (_) => OtpViewModel()),
-      ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+      //ChangeNotifierProvider(create: (_) => DashboardViewModel()),
       // ChangeNotifierProvider(create: (_) => LoanSuccessfulViewModel()),
       // ChangeNotifierProvider(create: (_) => SubmitLoanViewModel()),
       // ChangeNotifierProvider(create: (_) => RequestLoanViewModel()),

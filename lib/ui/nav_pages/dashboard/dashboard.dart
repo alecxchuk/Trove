@@ -4,8 +4,9 @@ import 'package:trove/app/app.locator.dart';
 import 'package:trove/models/loan_history.dart';
 import 'package:trove/models/user_model.dart';
 import 'package:trove/ui/nav_pages/dashboard/widgets/assets_tile.dart';
-import 'package:trove/ui/nav_pages/dashboard/widgets/info_tile.dart';
 import 'package:trove/ui/nav_pages/dashboard/widgets/quick_links.dart';
+import 'package:trove/ui/shared/progress_indicator.dart';
+import 'package:trove/ui/shared/shared.dart';
 import 'package:trove/ui/views/base_widget/base_widget.dart';
 import 'package:trove/ui/views/my_assets/my_assets.dart';
 import 'package:trove/utils/styles.dart';
@@ -20,7 +21,7 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     var provider = Provider.of<List<LoanHistoryModel>>(context);
     return BaseWidget<DashboardViewModel>(
-        model: model,
+        model: DashboardViewModel(),
         onModelReady: (model) => model.init(),
         builder: (context, model, child) => Scaffold(
                 body: Container(
@@ -62,15 +63,6 @@ class Dashboard extends StatelessWidget {
                               provider.isEmpty ? 'You have no loans yet' : '',
                               style: AppTextStyle.white500_20,
                             )
-
-                            // Row(children:[Text(
-                            //   'provider.first.',
-                            //   style: AppTextStyle.white500_20,
-                            // ),
-                            // Text(
-                            //   'You have no loans yet',
-                            //   style: AppTextStyle.white500_20,
-                            // )])
                           ],
                         ),
                       ),
@@ -87,7 +79,6 @@ class Dashboard extends StatelessWidget {
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
-                          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
                                 onTap: () {
@@ -102,7 +93,11 @@ class Dashboard extends StatelessWidget {
                                       builder: (context) => MyAssets(
                                           navToLoan: model.nToRequestLoan));
                                 },
-                                child: AssertCard(index: model.index)),
+                                child: model.busy
+                                    ? const CircularProgress(
+                                        color: AppColors.appwhite)
+                                    : AssertCard(
+                                        index: model.index, busy: model.busy)),
                             const SizedBox(
                               height: 8,
                             ),

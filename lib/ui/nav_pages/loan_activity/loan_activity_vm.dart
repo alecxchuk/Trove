@@ -10,6 +10,6 @@ class LoanActivityVm extends BaseModel {
 
   init() async {
     await _loanService.getLoanHistory(
-        _userService.userId, _userService.authToken);
+        _userService.userDetails!.id!, _userService.authToken);
   }
 }

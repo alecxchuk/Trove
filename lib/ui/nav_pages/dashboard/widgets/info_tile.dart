@@ -23,7 +23,7 @@ class InfoCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Balance'),
+                      const Text('Balance'),
                       Text(
                         'NGN 0.0',
                         style: AppTextStyle.blackBold24,
@@ -32,7 +32,7 @@ class InfoCard extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text('Monthly Payment'),
+                      const Text('Monthly Payment'),
                       Text(
                         'NGN 0.0',
                         style: AppTextStyle.blackBold24,
@@ -41,17 +41,17 @@ class InfoCard extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               const Divider(
                 height: 12,
                 color: Colors.amber,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
-              Text(
+              const Text(
                   'Choose from our loan packages, start with lower loans and progressively grow')
             ]),
       ),

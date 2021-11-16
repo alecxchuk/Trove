@@ -15,8 +15,8 @@ class LoanServices {
   List<LoanHistoryModel> initial = [];
   //
   Future<List<LoanHistoryModel>> getLoanHistory(String id, String token) async {
-    List<LoanHistoryModel> res = await _api.fetchLoanHistory(id, token);
-
+    var res = await _api.fetchLoanHistory(id, token);
+    print('zcad $res');
     // if (res?.data['data'] == null) {
     //   return [];
     // }
@@ -24,7 +24,7 @@ class LoanServices {
     //     .map((e) => LoanModel.fromJson(e))
     //     .toList();
 
-    if (res != []) {
+    if (res != [] || res != null) {
       loanController.add(res);
     }
 

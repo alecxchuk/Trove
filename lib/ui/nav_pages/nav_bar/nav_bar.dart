@@ -31,7 +31,8 @@ class NavBarState extends State<NavBar> {
             : selectedIndex == 1
                 ? 'Loan History'
                 : 'Profile',
-        leading: Icons.arrow_back_ios_new,
+        navBar: true,
+        //leading: Icons.arrow_back_ios_new,
       ),
       body: getViewForIndex(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

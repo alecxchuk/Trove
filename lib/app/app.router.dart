@@ -42,7 +42,7 @@ class AppRouter {
     // userProvider.isLogged();
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const SplashView());
+        return MaterialPageRoute(builder: (_) => SplashView());
       case Routes.loginView:
         return MaterialPageRoute(builder: (_) => const LoginPage());
       case Routes.signupView:
@@ -68,7 +68,7 @@ class AppRouter {
       case Routes.loanSuccessful:
         return MaterialPageRoute(builder: (_) => LoanSuccessful());
       case Routes.profilePage:
-        return MaterialPageRoute(builder: (_) => const ProfilePage());
+        return MaterialPageRoute(builder: (_) => ProfilePage());
       case Routes.loanActivity:
         return MaterialPageRoute(builder: (_) => LoanActivity());
       case Routes.completeProfile:

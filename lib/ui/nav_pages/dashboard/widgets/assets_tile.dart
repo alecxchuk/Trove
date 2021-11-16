@@ -6,31 +6,33 @@ import 'package:trove/utils/styles.dart';
 
 class AssertCard extends StatelessWidget {
   final int index;
-  const AssertCard({Key? key, required this.index}) : super(key: key);
+  final bool busy;
+  const AssertCard({Key? key, required this.index, required this.busy})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final widgets = [
       listItem(
-          index: '1',
+          index: '2',
           title: 'Your total asset portfolio',
           value: '10000',
           keys: const ValueKey(1)),
       listItem(
-          index: '2',
+          index: '5',
           title: Provider.of<List<UserPortfolio>>(context)[1].symbol!,
           value: Provider.of<List<UserPortfolio>>(context)[1].equityValue!,
           keys: const ValueKey(2)),
-      // listItem(
-      //     index: '3',
-      //     title: Provider.of<List<UserPortfolio>>(context)[2].symbol!,
-      //     value: Provider.of<List<UserPortfolio>>(context)[2].equityValue!,
-      //     keys: const ValueKey(3)),
-      // listItem(
-      //     index: '4',
-      //     title: Provider.of<List<UserPortfolio>>(context)[0].symbol!,
-      //     value: Provider.of<List<UserPortfolio>>(context)[0].equityValue!,
-      //     keys: const ValueKey(4)),
+      listItem(
+          index: '3',
+          title: Provider.of<List<UserPortfolio>>(context)[2].symbol!,
+          value: Provider.of<List<UserPortfolio>>(context)[2].equityValue!,
+          keys: const ValueKey(3)),
+      listItem(
+          index: '4',
+          title: Provider.of<List<UserPortfolio>>(context)[0].symbol!,
+          value: Provider.of<List<UserPortfolio>>(context)[0].equityValue!,
+          keys: const ValueKey(4)),
     ];
 
     return Container(
@@ -64,7 +66,7 @@ class AssertCard extends StatelessWidget {
                   child: child,
                 );
               },
-              child: widgets[index])),
+              child: busy ? Text('') : widgets[index])),
     );
   }
 
@@ -86,7 +88,7 @@ class AssertCard extends StatelessWidget {
                 ),
           SizedBox(height: path != null ? 8 : 0),
           Text(
-            title,
+            busy ? '----' : title,
             style: AppTextStyle.whiteNormal16,
           ),
           const SizedBox(
@@ -100,22 +102,25 @@ class AssertCard extends StatelessWidget {
                 textBaseline: TextBaseline.alphabetic,
                 children: [
                   Text(
-                    '\$ $value',
+                    busy ? '' : '\$ $value',
                     style: AppTextStyle.white600_32,
                   ),
                   const SizedBox(
                     width: 8,
                   ),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset(
-                        'assets/icons/up_arrow.svg',
-                      )),
+                  Visibility(
+                    visible: !busy,
+                    child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset(
+                          'assets/icons/up_arrow.svg',
+                        )),
+                  ),
                   const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    '+ $index%',
+                    busy ? '----' : '+ $index%',
                     style: AppTextStyle.whiteNormal12,
                   ),
                 ],

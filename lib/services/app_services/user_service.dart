@@ -59,9 +59,10 @@ class UserService {
     return _firstName;
   }
 
-  void setUserDetails(User user) {
+  void setUserDetails(User user, [String? _authToken]) {
     final val = jsonEncode(user.toMap());
     _sharedPrefs.setString(StorageKeys.currentUserModel, val);
+    _sharedPrefs.setString(StorageKeys.currentSessionToken, _authToken ?? '');
   }
 
   ///Get the token on app launch and to know if the user has
@@ -111,5 +112,9 @@ class UserService {
     _sharedPrefs.setString(StorageKeys.currentUserEmail, _userEmail);
     _sharedPrefs.setString(StorageKeys.currentSessionToken, _authToken);
     _sharedPrefs.setString(StorageKeys.currentUserId, _userId);
+  }
+
+  void clearData() {
+    _sharedPrefs.clearStorage();
   }
 }

@@ -12,8 +12,8 @@ class PortfolioService {
       StreamController<List<UserPortfolio>>();
 
   Future<List<UserPortfolio>> fetchUserPortfolio(
-      String id, String token) async {
-    var res = await _api.fetchUserPortfolio(id, token);
+      String? id, String token) async {
+    var res = await _api.fetchUserPortfolio(id!, token);
 
     if (res.isNotEmpty) {
       userController.add(res);

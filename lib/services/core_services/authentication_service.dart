@@ -9,18 +9,30 @@ class AuthenticationService {
 
   StreamController<User> userController = StreamController<User>();
 
-  Future<bool> login(String email, String password) async {
+  User? _user;
+  User get user => _user!;
+
+  /// Login
+  Future<Map<String, dynamic>> login(String email, String password) async {
     var fetchedUser = await _api.login(email: email, password: password);
 
     var hasUser = fetchedUser != null;
+    Map<String, dynamic> res = {};
 
     if (fetchedUser?.statusCode == 201) {
       var map =
           Map<String, dynamic>.from(fetchedUser?.data['data']['userDetails']);
-      final userModel = User.fromJson(map);
-      userController.add(userModel);
+      _user = User.fromJson(map);
+      userController.add(_user!);
+
+      res = {
+        'success': hasUser,
+        'verified': _user!.firstName!.isNotEmpty,
+        'data': _user,
+        'token': fetchedUser?.data['data']['token']
+      };
     }
 
-    return hasUser;
+    return res;
   }
 }

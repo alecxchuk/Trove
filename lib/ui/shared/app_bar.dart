@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool whiteBackground;
   bool isDarkMode;
   final Function()? onEditingComplete;
-  bool isSearchBar;
+  bool navBar;
   final String? subtitle;
   final List<Widget>? actions;
 
@@ -36,7 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onlineIndicator = false,
     Key? key,
     this.leadingPress,
-    this.isSearchBar = false,
+    this.navBar = false,
     this.searchController,
     this.searchBarIcon,
     this.hintText,
@@ -46,7 +46,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(isSearchBar ? 70 : 60);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +54,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       elevation: 1,
       leadingWidth: leadingWidth ? 10 : null,
-      leading: isSearchBar
+      leading: navBar
           ? null
           : InkWell(
               child: Icon(leading,
                   color: !isDarkMode ? AppColors.appwhite : AppColors.appBlack,
                   size: 16),
-              onTap: leadingPress),
+              onTap: () => leadingPress ?? Navigator.pop(context)),
       title: Text(
         title!,
         style: AppTextStyle.white500_20,
@@ -74,7 +74,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       //     : isDarkMode
       //         ? AppColors.darkThemePrimaryColor
       //         : AppColors.whiteColor,
-      actions: isSearchBar ? null : actions,
+      //actions: isSearchBar ? null : actions,
     );
   }
 }
